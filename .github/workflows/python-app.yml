@@ -76,7 +76,7 @@ jobs:
       uses: dorny/test-reporter@v3
       if: ${{ !cancelled() }}       # run this step even if previous step failed
       with:
-        name: Pytest Tests            # Name of the check run which will be created
+        name: pytest-xml-report            # Name of the check run which will be created
         path: output/test/*.xml      # Path to test results
         reporter: jest-junit        # Format of test results
   use_artifacts:
@@ -91,3 +91,10 @@ jobs:
       run: cat report.html
     - name: Display Test XML Report
       run: cat report.xml
+    - name: Display Test XML Report with Test Reporter
+      uses: dorny/test-reporter@v3
+      with:
+        artifact: test-results            # artifact name
+        name: pytest-xml-report            # Name of the check run which will be created
+        path: '*.xml'                     # Path to test results (inside artifact .zip)
+        reporter: jest-junit              # Format of test results
