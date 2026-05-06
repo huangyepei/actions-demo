@@ -7,6 +7,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
+      - '.github/**'
       - 'src/**'
       - 'tests/**'
       - 'requirements.txt'
@@ -15,6 +16,7 @@ on:
   pull_request:
     branches: [ "main" ]
     paths:
+      - '.github/**'
       - 'src/**'
       - 'tests/**'
       - 'requirements.txt'
@@ -63,19 +65,30 @@ jobs:
     - name: Test with pytest
       run: |
         mkdir -p output/test
-        pytest -v -s --self-contained-html --html=output/test/report.html ./tests
+        pytest -v -s --json-report --json-report-file=output/test/report.json --self-contained-html --html=output/test/report.html ./tests
     - name: Upload Test Results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: test-html-report
         path: output/test/report.html
-
+    - name: Upload JSON Report
+      uses: actions/upload-artifact@v7
+      with:
+        name: test-json-report
+        path: output/test/report.json
+    - name: Display Pytest Report
+      uses: dorny/test-reporter@v3
+      if: ${{ !cancelled() }}       # run this step even if previous step failed
+      with:
+        name: Pytest Tests            # Name of the check run which will be created
+        path: output/test/*.json    # Path to test results
+        reporter: python-xunit        # Format of test results
   use_artifacts:
     runs-on: ubuntu-latest
     needs: build_and_test
     steps:
     - name: Download Test Results
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v8
       with:
         name: test-html-report
 
