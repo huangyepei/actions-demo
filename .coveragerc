@@ -1,0 +1,12 @@
+[run]
+# 指定你要测量覆盖率的源代码路径，例如 `src/` 或 `.`
+source = src/
+# 忽略特定的文件或目录
+omit =
+    # 忽略所有 __init__.py 文件
+    */__init__.py
+    # 如果需要忽略特定文件名的文件，例如 config.py
+    */example_usage.py
+    # 也可以忽略整个目录
+    tests/*
+    venv/*
