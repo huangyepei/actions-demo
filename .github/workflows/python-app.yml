@@ -9,17 +9,17 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
   pull_request:
     branches: [ "main" ]
     paths:
       - 'src/**'
       - 'tests/**'
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
+      - 'requirements.txt'
+      - 'setup.py'
+      - 'pyproject.toml'
   workflow_dispatch:
     inputs:
       branch:
