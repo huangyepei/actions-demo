@@ -70,7 +70,7 @@ jobs:
     - name: Upload Test Results
       uses: actions/upload-artifact@v7
       with:
-        name: test-html-report
+        name: test-results
         path: output/test
     - name: Display Pytest XML Report
       uses: dorny/test-reporter@v3
@@ -86,7 +86,7 @@ jobs:
     - name: Download Test Results
       uses: actions/download-artifact@v8
       with:
-        name: test-html-report
+        name: test-results
     - name: Display Test Results
       run: cat report.html
     - name: Display Test XML Report
@@ -96,5 +96,5 @@ jobs:
       with:
         artifact: test-results            # artifact name
         name: pytest-xml-report            # Name of the check run which will be created
-        path: '*.xml'                     # Path to test results (inside artifact .zip)
+        path: report.xml                     # Path to test results (inside artifact .zip)
         reporter: jest-junit              # Format of test results
